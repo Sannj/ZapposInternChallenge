@@ -32,6 +32,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     float dY;
     TranslateAnimation moveImage;
     MenuItem mt;
+    Bitmap scaled;
+    ImageView scaledImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,34 +57,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "abcd", Toast.LENGTH_LONG).show();
-                final int maxSize = 30;
-                int outWidth;
-                int outHeight;
                 int inWidth = imageBitmap.getWidth();
                 int inHeight = imageBitmap.getHeight();
-                if(inWidth > inHeight){
-                    outWidth = maxSize;
-                    outHeight = (inHeight * maxSize) / inWidth;
-                } else {
-                    outHeight = maxSize;
-                    outWidth = (inWidth * maxSize) / inHeight;
-                }
-                Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, inWidth, inHeight, true);
-                ImageView scaledImage = (ImageView) findViewById(R.id.scaled_image);
+                scaled = Bitmap.createScaledBitmap(imageBitmap, inWidth, inHeight, true);
+                scaledImage = (ImageView) findViewById(R.id.scaled_image);
                 scaledImage.setImageBitmap(scaled);
                 View ScaledImageView = findViewById(R.id.scaled_image);
                 ScaledImageView.getLocationOnScreen(sLoc);
                 sX = sLoc[0];
                 sY = sLoc[1];
-                moveImage = new TranslateAnimation(sX, dX, sY, dY);
+                moveImage = new TranslateAnimation(sX, dX, sY, -1);
                 moveImage.setDuration(2000);
                 moveImage.setFillAfter(true);
+                //scaledImage.bringToFront();
+              //  ScaledImageView.bringToFront();
+             //   imageView.setVisibility(View.INVISIBLE);
+                scaledImage.setImageBitmap(scaled);
                 scaledImage.startAnimation(moveImage);
-                /*moveImage = new TranslateAnimation(sX, dX, sY, dY);
-                moveImage.setDuration(2000);
-                moveImage.setFillAfter(true);
-                scaledImage.startAnimation(moveImage);*/
+               // ScaledImageView.startAnimation(moveImage);
+
                 /*Snackbar.make(view, "Do more with less", Snackbar.LENGTH_SHORT).setAction("YES!", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
